@@ -1,4 +1,8 @@
 /.project
 /.pydevproject
 
+<<<<<<< HEAD
 data/settings.json
+=======
+/data/settings.json
+>>>>>>> branch 'main' of https://github.com/Drasli-Tana/TTY.git
