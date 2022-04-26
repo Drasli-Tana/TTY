@@ -6,4 +6,4 @@ Ce bot est conçu pour être utilisé comme un terminal basique pour utiliser et
 
 ## English
 
-This bot is designed as a basic terminal. Its purpose are using and displaying files. The total size of the tree structure is limited to 2GB for technical reasons. Each user will have its own tree, as it can be found on a Linux system inside the `/home` directory.
+This bot is designed as a basic terminal. Its purpose are using and displaying files. The total size of the tree structure is limited to **2GB** for technical reasons. Each user will have its own tree, as it can be found on a Linux system inside the `/home` directory.
