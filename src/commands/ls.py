@@ -32,7 +32,7 @@ class Command_ls(DC.Command):
                 "Ces commandes ne peuvent être utilisées que dans " + 
                 "les messages privés")
             return
-            
+    
         rootPath = f"root/{ctx.author.id}"
         joker = False
         if not os.path.exists(rootPath):
