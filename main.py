@@ -20,7 +20,7 @@ if not os.path.exists("root"):
     os.mkdir("root")
 
 if not os.path.exists("data/directory.json"):
-    with open("data/directory.json") as file:
+    with open("data/directory.json", mode="w") as file:
         json.dump(dict(), file)
 
 with open("data/settings.json") as file:
