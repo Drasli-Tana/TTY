@@ -18,8 +18,21 @@ class Command_ls(DC.Command):
         super().__init__(self.ls)
         self.name = "ls"
         self.brief = "Liste le contenu du répertoire ciblé"
+        self.help = ("Permet de lister le contenu du dossier spécifié, il " +
+                     "n'y a pas d'options pour l'instant")
+        
+        self.usage = "[option...][chemin...]"
     
     async def ls(self, ctx):
+        if ctx.message.author.dm_channel is None:
+            await ctx.message.author.create_dm()
+        
+        if ctx.message.guild is not None:
+            await ctx.message.author.dm_channel.send(
+                "Ces commandes ne peuvent être utilisées que dans " + 
+                "les messages privés")
+            return
+            
         rootPath = f"root/{ctx.author.id}"
         joker = False
         if not os.path.exists(rootPath):
@@ -75,10 +88,6 @@ class Command_ls(DC.Command):
                 
                 elif os.path.exists(currentDir + chemin):
                     files[chemin] = os.listdir(currentDir + chemin)
-                    
-        
-        if ctx.message.author.dm_channel is None:
-            await ctx.message.author.create_dm()
         
         if joker:
             await ctx.message.author.dm_channel.send(
