@@ -61,8 +61,8 @@ class Command_ls(DC.Command):
                 files[chemin] = os.listdir(chemin)
         
         if ctx.message.author.dm_channel is None:
-            ctx.author.create_dm()
+            await ctx.message.author.create_dm()
         
-        await ctx.author.message.dm_channel.send(
-            "\n".join(["\t" + chemin + "\n" + "\n".join(files[chemin])
+        await ctx.message.author.dm_channel.send(
+            "\n".join(["\t" + chemin + ":\n" + "\n".join(files[chemin])
                        for chemin in files]))
