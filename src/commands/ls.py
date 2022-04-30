@@ -15,7 +15,7 @@ class Command_ls(DC.Command):
         "-R": False,
         "-s": False}
     def __init__(self):
-        super().__init__(self.ls)
+        super().__init__(self.main)
         self.name = "ls"
         self.brief = "Liste le contenu du répertoire ciblé"
         self.help = ("Permet de lister le contenu du dossier spécifié, il " +
@@ -23,7 +23,7 @@ class Command_ls(DC.Command):
         
         self.usage = "[option...][chemin...]"
     
-    async def ls(self, ctx):
+    async def main(self, ctx):
         if ctx.message.author.dm_channel is None:
             await ctx.message.author.create_dm()
         
