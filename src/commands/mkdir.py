@@ -14,6 +14,6 @@ class Command_mkdir(DC.Command):
         self.brief = "Permet de créer un ou plusieurs dossiers"
         self.usage = "[OPTION...] <Dossier>"
         self.help = ("Crée un ou plusieurs dossiers\nL'option p permet de créer " +
-                     "toute arborescence nécessaire")
+                     "toute arborescence nécessaire.")
         
         
