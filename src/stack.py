@@ -28,8 +28,8 @@ class Stack:
     def pop(self):
         if self.cell is None:
             raise IndexError("Stack is empty.")
-        value = self.cell.get_value()
-        self.cell = self.cell.get_last_cell()
+        value = self.cell.getValue()
+        self.cell = self.cell.getLastCell()
         return value
         
     def isEmpty(self):

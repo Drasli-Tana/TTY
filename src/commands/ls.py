@@ -21,6 +21,7 @@ class Command_ls(DC.Command):
     
     async def ls(self, ctx):
         rootPath = f"root/{ctx.author.id}"
+        joker = False
         if not os.path.exists(rootPath):
             os.mkdir(rootPath)
         
@@ -40,29 +41,55 @@ class Command_ls(DC.Command):
                     options[param] = None
             
             else:
+                if "*" in param:
+                    param = param.replace("*", "")
+                    joker = True
                 pile.append(param)
         
         files = dict()
-        while not pile.isEmpty():
-            chemin = pile.pop()
-            if chemin.startswith("/"):
-                chemin = rootPath + chemin
-            
-            else:
-                with open("data/directory.json") as file:
-                    chemin = json.load(file).get(
-                        f"{ctx.author.id}", rootPath) + f"/{chemin}"
-            
-            files[chemin] = os.listdir(chemin)
-        
-        else:
+        if pile.isEmpty():
             with open("data/directory.json") as file:
                 chemin = json.load(file).get(f"{ctx.author.id}", rootPath)
                 files[chemin] = os.listdir(chemin)
         
+        else:
+            while not pile.isEmpty():
+                chemin = pile.pop()
+                if chemin.startswith("/"):
+                    currentDir = rootPath
+                
+                else:
+                    with open("data/directory.json") as file:
+                        currentDir = json.load(file).get(
+                            f"{ctx.author.id}", rootPath) + "/"
+                        
+                if not os.path.abspath(currentDir + chemin).startswith(
+                    os.path.abspath(rootPath)):
+                    #print("Chemin invalide")
+                    currentDir = ""
+                    chemin = rootPath
+                
+                if os.path.isfile(currentDir + chemin):
+                    files["files"] = files.get("", list()) + [
+                        (currentDir + chemin).replace(rootPath, "")]
+                
+                elif os.path.exists(currentDir + chemin):
+                    files[chemin] = os.listdir(currentDir + chemin)
+                    
+        
         if ctx.message.author.dm_channel is None:
             await ctx.message.author.create_dm()
         
-        await ctx.message.author.dm_channel.send(
-            "\n\n".join([chemin + ":\n" + "\n".join(files[chemin])
-                       for chemin in files]))
+        if joker:
+            await ctx.message.author.dm_channel.send(
+                "Les jokers ne sont pas supportés pour l'instant, ils sont donc ignorés")
+        
+        if files:
+            await ctx.message.author.dm_channel.send(
+                "\n\n".join([chemin.replace(rootPath, "/") + 
+                             ":\n" + "\n".join(files[chemin])
+                           for chemin in files]))
+        
+        else:
+            await ctx.message.author.dm_channel.send(
+                "No files/directories to list.")
