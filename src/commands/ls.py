@@ -64,5 +64,5 @@ class Command_ls(DC.Command):
             await ctx.message.author.create_dm()
         
         await ctx.message.author.dm_channel.send(
-            "\n".join(["\t" + chemin + ":\n" + "\n".join(files[chemin])
+            "\n\n".join([chemin + ":\n" + "\n".join(files[chemin])
                        for chemin in files]))
